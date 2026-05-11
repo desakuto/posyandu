@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Posyandu Desa</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f2f4f7;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #1f2937;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #15803d;
+}
+
+.card {
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.box {
+  background: #2563eb;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div id="loginPage">
+<h2>LOGIN PETUGAS</h2>
+
+<input type="text" id="username" placeholder="Username">
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="login()">Masuk</button>
+</div>
+
+<div id="appPage" class="hidden">
+<h2>LAPORAN POSYANDU</h2>
+
+<div class="dashboard">
+  <div class="box">
+    <h3 id="totalHadir">0</h3>
+    <small>Total Hadir</small>
+  </div>
+
+  <div class="box">
+    <h3 id="persentase">0%</h3>
+    <small>Persentase</small>
+  </div>
+</div>
+
+<div class="card">
+<select id="bulan">
+<option>Januari</option>
+<option>Februari</option>
+<option>Maret</option>
+<option>April</option>
+<option>Mei</option>
+<option>Juni</option>
+<option>Juli</option>
+<option>Agustus</option>
+<option>September</option>
+<option>Oktober</option>
+<option>November</option>
+<option>Desember</option>
+</select>
+
+<select id="dusun">
+<option>Kuto</option>
+<option>Plosorejo</option>
+<option>Randubener</option>
+<option>Grobogan</option>
+<option>Pengin</option>
+<option>Bandungan</option>
+<option>Kasihan</option>
+</select>
+
+<input type="text" id="posyandu" placeholder="Nama Posyandu">
+<input type="number" id="penduduk" placeholder="Jumlah Penduduk">
+<input type="number" id="balita" placeholder="Jumlah Balita">
+<input type="number" id="remaja" placeholder="Jumlah Remaja">
+<input type="number" id="dewasa" placeholder="Jumlah Dewasa">
+<input type="number" id="lansia" placeholder="Jumlah Lansia">
+<input type="text" id="pelapor" placeholder="Nama Pelapor">
+
+<h3>Jumlah Laporan Bidang</h3>
+
+<input type="number" id="kesehatan" placeholder="Bidang Kesehatan">
+<input type="number" id="sosial" placeholder="Bidang Sosial">
+<input type="number" id="pendidikan" placeholder="Bidang Pendidikan">
+<input type="number" id="pekerjaan" placeholder="Bidang Pekerjaan Umum">
+<input type="number" id="perumahan" placeholder="Bidang Perumahan">
+<input type="number" id="trantib" placeholder="Bidang Trantibumlinmas">
+
+<button onclick="simpan()">SIMPAN LAPORAN</button>
+</div>
+</div>
+
+</div>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbzSnd42k_Z2WxO_5Bm9SpBslmmkGlH_GZh6Va2napbNx1YR0lFnSJaf1dkV64qKQw1N/exec';
+
+function login() {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify({
+      action: 'login',
+      username,
+      password
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === 'success') {
+      document.getElementById('loginPage').classList.add('hidden');
+      document.getElementById('appPage').classList.remove('hidden');
+    } else {
+      alert('Login gagal');
+    }
+  });
+}
+
+function hitungDashboard() {
+  const balita = Number(document.getElementById('balita').value || 0);
+  const remaja = Number(document.getElementById('remaja').value || 0);
+  const dewasa = Number(document.getElementById('dewasa').value || 0);
+  const lansia = Number(document.getElementById('lansia').value || 0);
+  const penduduk = Number(document.getElementById('penduduk').value || 0);
+
+  const total = balita + remaja + dewasa + lansia;
+
+  document.getElementById('totalHadir').innerText = total;
+
+  const persen = penduduk > 0
+    ? ((total / penduduk) * 100).toFixed(2)
+    : 0;
+
+  document.getElementById('persentase').innerText = persen + '%';
+}
+
+['balita','remaja','dewasa','lansia','penduduk']
+.forEach(id => {
+  document.getElementById(id)
+  .addEventListener('input', hitungDashboard);
+});
+
+function simpan() {
+
+  const data = {
+    action: 'save',
+    dusun: document.getElementById('dusun').value,
+    bulan: document.getElementById('bulan').value,
+    posyandu: document.getElementById('posyandu').value,
+    penduduk: document.getElementById('penduduk').value,
+    balita: document.getElementById('balita').value,
+    remaja: document.getElementById('remaja').value,
+    dewasa: document.getElementById('dewasa').value,
+    lansia: document.getElementById('lansia').value,
+    pelapor: document.getElementById('pelapor').value,
+    kesehatan: document.getElementById('kesehatan').value,
+    sosial: document.getElementById('sosial').value,
+    pendidikan: document.getElementById('pendidikan').value,
+    pekerjaan: document.getElementById('pekerjaan').value,
+    perumahan: document.getElementById('perumahan').value,
+    trantib: document.getElementById('trantib').value
+  };
+
+  fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(result => {
+    if (result.status === 'success') {
+      alert('Data berhasil disimpan');
+      location.reload();
+    } else {
+      alert('Gagal menyimpan');
+    }
+  });
+}
+</script>
+
+</body>
+</html>
