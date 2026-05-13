@@ -551,24 +551,27 @@ function login() {
 
   showLoading();
 
-  fetch(API_URL, {
+ fetch(API_URL, {
 
-    method: 'POST',
+  method: 'POST',
 
-    body: JSON.stringify({
-      action: 'login',
-      username,
-      password
-    })
+  headers: {
+    'Content-Type': 'text/plain;charset=utf-8'
+  },
 
+  body: JSON.stringify({
+    action: 'login',
+    username,
+    password
   })
+
+})
 
   .then(res => res.json())
 
   .then(data => {
 
     // beri delay agar loading terlihat
-    setTimeout(() => {
 
       hideLoading();
 
@@ -583,21 +586,15 @@ function login() {
           .classList.remove('hidden');
 
       } else {
-
         alert('Login gagal');
       }
-
-    }, 1200);
-
-  })
+   })
 
  .catch(err => {
 
-    setLoading(false);
-
     hideLoading();
 
-    console.error(err);
+    console.log(err);
 
     alert('Terjadi kesalahan koneksi');
 });
