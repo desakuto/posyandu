@@ -243,6 +243,276 @@ function simpan() {
     }
   });
 }
+  // ===============================
+// VALIDASI FORM
+// ===============================
+
+function validasiForm(data) {
+
+  if (!data.posyandu) {
+    alert('Nama Posyandu wajib diisi');
+    return false;
+  }
+
+  if (!data.penduduk) {
+    alert('Jumlah penduduk wajib diisi');
+    return false;
+  }
+
+  if (!data.pelapor) {
+    alert('Nama pelapor wajib diisi');
+    return false;
+  }
+
+  return true;
+}
+
+// ===============================
+// RESET FORM
+// ===============================
+
+function resetForm() {
+
+  document.getElementById('posyandu').value = '';
+  document.getElementById('penduduk').value = '';
+  document.getElementById('balita').value = '';
+  document.getElementById('remaja').value = '';
+  document.getElementById('dewasa').value = '';
+  document.getElementById('lansia').value = '';
+  document.getElementById('pelapor').value = '';
+
+  document.getElementById('kesehatan').value = '';
+  document.getElementById('sosial').value = '';
+  document.getElementById('pendidikan').value = '';
+  document.getElementById('pekerjaan').value = '';
+  document.getElementById('perumahan').value = '';
+  document.getElementById('trantib').value = '';
+
+  document.getElementById('totalHadir').innerText = '0';
+  document.getElementById('persentase').innerText = '0%';
+}
+
+// ===============================
+// LOADING BUTTON
+// ===============================
+
+const tombolSimpan = document.querySelector('button[onclick="simpan()"]');
+
+function setLoading(isLoading) {
+
+  if (isLoading) {
+
+    tombolSimpan.disabled = true;
+    tombolSimpan.innerText = 'MENYIMPAN...';
+
+    tombolSimpan.style.opacity = '0.7';
+
+  } else {
+
+    tombolSimpan.disabled = false;
+    tombolSimpan.innerText = 'SIMPAN LAPORAN';
+
+    tombolSimpan.style.opacity = '1';
+  }
+}
+
+// ===============================
+// OVERRIDE FUNGSI SIMPAN
+// ===============================
+
+const simpanLama = simpan;
+
+simpan = function () {
+
+  const data = {
+    action: 'save',
+    dusun: document.getElementById('dusun').value,
+    bulan: document.getElementById('bulan').value,
+    posyandu: document.getElementById('posyandu').value,
+    penduduk: document.getElementById('penduduk').value,
+    balita: document.getElementById('balita').value,
+    remaja: document.getElementById('remaja').value,
+    dewasa: document.getElementById('dewasa').value,
+    lansia: document.getElementById('lansia').value,
+    pelapor: document.getElementById('pelapor').value,
+    kesehatan: document.getElementById('kesehatan').value,
+    sosial: document.getElementById('sosial').value,
+    pendidikan: document.getElementById('pendidikan').value,
+    pekerjaan: document.getElementById('pekerjaan').value,
+    perumahan: document.getElementById('perumahan').value,
+    trantib: document.getElementById('trantib').value
+  };
+
+  // validasi
+  if (!validasiForm(data)) return;
+
+  setLoading(true);
+
+  fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
+
+  .then(res => res.json())
+
+  .then(result => {
+
+    setLoading(false);
+
+    console.log(result);
+
+    if (result.status === 'success') {
+
+      alert('Laporan berhasil disimpan');
+
+      resetForm();
+
+    } else {
+
+      alert(
+        'Gagal menyimpan : ' +
+        (result.message || 'Unknown Error')
+      );
+    }
+  })
+
+  .catch(err => {
+
+    setLoading(false);
+
+    console.error(err);
+
+    alert('Terjadi kesalahan koneksi');
+  });
+}
+  // ======================================
+// DATA OTOMATIS DUSUN
+// ======================================
+
+const dataDusun = {
+
+  "Kuto": {
+    posyandu: "NGUDI SEHAT",
+    penduduk: 1132
+  },
+
+  "Plosorejo": {
+    posyandu: "MUGI RAHAYU",
+    penduduk: 1102
+  },
+
+  "Randubener": {
+    posyandu: "NGUDI LUHUR",
+    penduduk: 1220
+  },
+
+  "Grobogan": {
+    posyandu: "NGUDI MULYO",
+    penduduk: 863
+  },
+
+  "Pengin": {
+    posyandu: "LANGSUNG SEHAT",
+    penduduk: 810
+  },
+
+  "Bandungan": {
+    posyandu: "NGUDI WARAS",
+    penduduk: 743
+  },
+
+  "Kasihan": {
+    posyandu: "BRASTOMOLO",
+    penduduk: 492
+  }
+};
+
+// ======================================
+// AUTO ISI POSYANDU & PENDUDUK
+// ======================================
+
+function updateDusunData() {
+
+  const dusun =
+    document.getElementById('dusun').value;
+
+  const data = dataDusun[dusun];
+
+  if (data) {
+
+    const posyanduInput =
+      document.getElementById('posyandu');
+
+    const pendudukInput =
+      document.getElementById('penduduk');
+
+    posyanduInput.value = data.posyandu;
+    pendudukInput.value = data.penduduk;
+
+    // readonly
+    posyanduInput.readOnly = true;
+    pendudukInput.readOnly = true;
+
+    // style readonly
+    posyanduInput.style.background = '#e5e7eb';
+    pendudukInput.style.background = '#e5e7eb';
+
+    // update dashboard otomatis
+    hitungDashboard();
+  }
+}
+
+// ======================================
+// AUTO BULAN SESUAI BULAN SEKARANG
+// ======================================
+
+function autoBulanSekarang() {
+
+  const bulanSelect =
+    document.getElementById('bulan');
+
+  const bulanIndonesia = [
+    'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'
+  ];
+
+  const bulanSekarang =
+    bulanIndonesia[new Date().getMonth()];
+
+  bulanSelect.value = bulanSekarang;
+}
+
+// ======================================
+// EVENT PERUBAHAN DUSUN
+// ======================================
+
+document
+  .getElementById('dusun')
+  .addEventListener(
+    'change',
+    updateDusunData
+  );
+
+// ======================================
+// JALANKAN OTOMATIS SAAT HALAMAN DIBUKA
+// ======================================
+
+window.addEventListener('load', () => {
+
+  autoBulanSekarang();
+
+  updateDusunData();
+});
 </script>
 
 </body>
