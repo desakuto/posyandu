@@ -44,7 +44,110 @@ h2 {
   text-align: center;
   color: #1f2937;
 }
+/* ======================================
+   JUDUL ELEGAN
+====================================== */
 
+.judul-app {
+
+  text-align: center;
+
+  margin-bottom: 30px;
+
+  padding: 10px;
+
+  animation: fadeDown 1s ease;
+}
+
+.judul-kecil {
+
+  font-size: 13px;
+
+  letter-spacing: 3px;
+
+  color: #64748b;
+
+  margin-bottom: 8px;
+
+  font-weight: bold;
+}
+
+.judul-besar {
+
+  font-size: 38px;
+
+  font-weight: 900;
+
+  color: #1e293b;
+
+  line-height: 1.1;
+
+  text-shadow:
+    0 2px 4px rgba(0,0,0,0.08),
+    0 8px 20px rgba(37,99,235,0.15);
+
+  margin-bottom: 18px;
+}
+
+.judul-desa {
+
+  display: inline-block;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8
+  );
+
+  color: white;
+
+  padding: 10px 24px;
+
+  border-radius: 999px;
+
+  font-size: 20px;
+
+  font-weight: bold;
+
+  box-shadow:
+    0 8px 20px rgba(37,99,235,0.25);
+
+  margin-bottom: 15px;
+}
+
+.judul-lokasi {
+
+  font-size: 16px;
+
+  color: #475569;
+
+  font-weight: 500;
+
+  letter-spacing: 0.5px;
+}
+
+/* ======================================
+   ANIMASI
+====================================== */
+
+@keyframes fadeDown {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(-25px);
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
 input, select {
   width: 100%;
   padding: 12px;
@@ -353,9 +456,25 @@ Desa Kuto Kec. Kerjo Kab. Karanganyar
 </div>
 
 <div id="appPage" class="hidden">
-<h2>LAPORAN POSYANDU 6 SPM</h2>
-<h2>DESA KUTO KECAMATAN KERJO</h2> 
-<h2>KABUPATEN KARANGANYAR</h2>
+<div class="judul-app">
+
+  <div class="judul-kecil">
+    SISTEM PELAPORAN
+  </div>
+
+  <div class="judul-besar">
+    POSYANDU 6 SPM
+  </div>
+
+  <div class="judul-desa">
+    DESA KUTO
+  </div>
+
+  <div class="judul-lokasi">
+    Kecamatan Kerjo • Kabupaten Karanganyar
+  </div>
+
+</div>
   
 <div class="dashboard">
   <div class="box">
