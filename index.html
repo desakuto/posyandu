@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Posyandu Desa Kuto</title>
+
+<style>
+body {
+
+  font-family: Arial;
+
+  margin: 0;
+  padding: 20px;
+
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      135deg,
+      #dbeafe,
+      #dcfce7,
+      #f0fdf4
+    );
+
+  overflow-x: hidden;
+
+  position: relative;
+}
+
+.container {
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.3);
+  animation: fadeIn 1s ease;
+  max-width: 500px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #1f2937;
+}
+/* ======================================
+   JUDUL ELEGAN
+====================================== */
+
+.judul-app {
+
+  text-align: center;
+
+  margin-bottom: 30px;
+
+  padding: 10px;
+
+  animation: fadeDown 1s ease;
+}
+
+.judul-kecil {
+
+  font-size: 13px;
+
+  letter-spacing: 3px;
+
+  color: #64748b;
+
+  margin-bottom: 8px;
+
+  font-weight: bold;
+}
+
+.judul-besar {
+
+  font-size: 38px;
+
+  font-weight: 900;
+
+  color: #1e293b;
+
+  line-height: 1.1;
+
+  text-shadow:
+    0 2px 4px rgba(0,0,0,0.08),
+    0 8px 20px rgba(37,99,235,0.15);
+
+  margin-bottom: 18px;
+}
+
+.judul-desa {
+
+  display: inline-block;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8
+  );
+
+  color: white;
+
+  padding: 10px 24px;
+
+  border-radius: 999px;
+
+  font-size: 20px;
+
+  font-weight: bold;
+
+  box-shadow:
+    0 8px 20px rgba(37,99,235,0.25);
+
+  margin-bottom: 15px;
+}
+
+.judul-lokasi {
+
+  font-size: 16px;
+
+  color: #475569;
+
+  font-weight: 500;
+
+  letter-spacing: 0.5px;
+}
+
+/* ======================================
+   ANIMASI
+====================================== */
+
+@keyframes fadeDown {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(-25px);
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #15803d;
+}
+
+.card {
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.box {
+  background: #2563eb;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+}
+  /* ======================================
+   LOADING ANIMASI
+====================================== */
+
+.loading-overlay {
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+}
+
+.loading-circle {
+
+  width: 220px;
+  height: 220px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+
+  box-shadow: 0 0 25px rgba(0,0,0,0.2);
+
+  animation: pulse 1.5s infinite;
+}
+
+.spinner {
+
+  width: 170px;
+  height: 170px;
+
+  border-radius: 50%;
+
+  border: 10px solid #e5e7eb;
+  border-top: 10px solid #16a34a;
+
+  animation: spin 1s linear infinite;
+}
+
+.loading-text {
+
+  position: absolute;
+
+  font-size: 22px;
+  font-weight: bold;
+
+  color: #16a34a;
+
+  text-align: center;
+
+  animation: blink 1s infinite;
+}
+
+@keyframes spin {
+
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes blink {
+
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+  /* ======================================
+   FIX HIDDEN OVERLAY
+====================================== */
+
+.loading-overlay.hidden {
+  display: none !important;
+}
+/* ======================================
+   ANIMASI MODERN
+====================================== */
+
+@keyframes fadeIn {
+
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floating {
+
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.logo-posyandu {
+
+  width: 110px;
+
+  display: block;
+
+  margin: 0 auto 15px auto;
+
+  animation: floating 3s ease-in-out infinite;
+}
+
+.login-title {
+
+  text-align: center;
+
+  font-size: 34px;
+
+  font-weight: bold;
+
+  color: #166534;
+
+  margin-bottom: 5px;
+}
+
+.login-subtitle {
+
+  text-align: center;
+
+  color: #4b5563;
+
+  margin-bottom: 25px;
+}
+
+.bg-bubble {
+
+  position: fixed;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.4);
+
+  animation: bubbleMove 15s linear infinite;
+
+  z-index: -1;
+}
+
+.bg1 {
+  width: 120px;
+  height: 120px;
+  top: 10%;
+  left: 5%;
+}
+
+.bg2 {
+  width: 80px;
+  height: 80px;
+  bottom: 15%;
+  right: 10%;
+}
+
+.bg3 {
+  width: 60px;
+  height: 60px;
+  top: 50%;
+  right: 20%;
+}
+
+@keyframes bubbleMove {
+
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+</style>
+</head>
+<body>
+<div class="bg-bubble bg1"></div>
+<div class="bg-bubble bg2"></div>
+<div class="bg-bubble bg3"></div>
+<div class="container">
+
+<div id="loginPage">
+  <img
+class="logo-posyandu"
+src="logo.png"
+>
+
+<div class="login-title">
+POSYANDU 6 SPM
+</div>
+
+<div class="login-subtitle">
+Desa Kuto Kec. Kerjo Kab. Karanganyar 
+</div>
+
+<input type="text" id="username" placeholder="Username">
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="login()">Masuk</button>
+</div>
+
+<div id="appPage" class="hidden">
+<div class="judul-app">
+
+  <div class="judul-kecil">
+    SISTEM PELAPORAN
+  </div>
+
+  <div class="judul-besar">
+    POSYANDU 6 SPM
+  </div>
+
+  <div class="judul-desa">
+    DESA KUTO
+  </div>
+
+  <div class="judul-lokasi">
+    Kecamatan Kerjo • Kabupaten Karanganyar
+  </div>
+
+</div>
+  
+<div class="dashboard">
+  <div class="box">
+    <h3 id="totalHadir">0</h3>
+    <small>Total Hadir</small>
+  </div>
+
+  <div class="box">
+    <h3 id="persentase">0%</h3>
+    <small>Persentase</small>
+  </div>
+</div>
+
+<div class="card">
+<select id="bulan">
+<option>Januari</option>
+<option>Februari</option>
+<option>Maret</option>
+<option>April</option>
+<option>Mei</option>
+<option>Juni</option>
+<option>Juli</option>
+<option>Agustus</option>
+<option>September</option>
+<option>Oktober</option>
+<option>November</option>
+<option>Desember</option>
+</select>
+
+<select id="dusun">
+<option>Kuto</option>
+<option>Plosorejo</option>
+<option>Randubener</option>
+<option>Grobogan</option>
+<option>Pengin</option>
+<option>Bandungan</option>
+<option>Kasihan</option>
+</select>
+
+<input type="text" id="posyandu" placeholder="Nama Posyandu">
+<input type="number" id="penduduk" placeholder="Jumlah Penduduk">
+<input type="number" id="balita" placeholder="Balita Hadir">
+<input type="number" id="remaja" placeholder="Remaja Hadir">
+<input type="number" id="dewasa" placeholder="Dewasa Hadir">
+<input type="number" id="lansia" placeholder="Lansia Hadir">
+<input type="text" id="pelapor" placeholder="Nama Pelapor">
+
+<h3>Jumlah Laporan Bidang</h3>
+
+<input type="number" id="kesehatan" placeholder="Bidang Kesehatan">
+<input type="number" id="sosial" placeholder="Bidang Sosial">
+<input type="number" id="pendidikan" placeholder="Bidang Pendidikan">
+<input type="number" id="pekerjaan" placeholder="Bidang Pekerjaan Umum">
+<input type="number" id="perumahan" placeholder="Bidang Perumahan">
+<input type="number" id="trantib" placeholder="Bidang Trantibumlinmas">
+
+<button onclick="simpan()">SIMPAN LAPORAN</button>
+<button onclick="logout()" style="margin-top:10px;background:#dc2626;">LOGOUT</button>
+</div>
+</div>
+
+</div>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbwZ8cSQbaHCz28MwzU6SQCTcD7CAo3aDtPpSeZybBJhormM25lQGwtXrK3eY10XvIIg/exec';
+
+function login() {
+
+  const username =
+    document.getElementById('username').value;
+
+  const password =
+    document.getElementById('password').value;
+
+  showLoading();
+
+  fetch(API_URL, {
+
+    method: 'POST',
+
+    body: JSON.stringify({
+      action: 'login',
+      username,
+      password
+    })
+
+  })
+
+  .then(res => res.json())
+
+  .then(data => {
+
+    // beri delay agar loading terlihat
+    setTimeout(() => {
+
+      hideLoading();
+
+      if (data.status === 'success') {
+
+        document
+          .getElementById('loginPage')
+          .classList.add('hidden');
+
+        document
+          .getElementById('appPage')
+          .classList.remove('hidden');
+
+      } else {
+
+        alert('Login gagal');
+      }
+
+    }, 1200);
+
+  })
+
+ .catch(err => {
+
+    setLoading(false);
+
+    hideLoading();
+
+    console.error(err);
+
+    alert('Terjadi kesalahan koneksi');
+});
+}
+
+function hitungDashboard() {
+  const balita = Number(document.getElementById('balita').value || 0);
+  const remaja = Number(document.getElementById('remaja').value || 0);
+  const dewasa = Number(document.getElementById('dewasa').value || 0);
+  const lansia = Number(document.getElementById('lansia').value || 0);
+  const penduduk = Number(document.getElementById('penduduk').value || 0);
+
+  const total = balita + remaja + dewasa + lansia;
+
+  document.getElementById('totalHadir').innerText = total;
+
+  const persen = penduduk > 0
+    ? ((total / penduduk) * 100).toFixed(2)
+    : 0;
+
+  document.getElementById('persentase').innerText = persen + '%';
+}
+
+['balita','remaja','dewasa','lansia','penduduk']
+.forEach(id => {
+  document.getElementById(id)
+  .addEventListener('input', hitungDashboard);
+});
+
+function simpan() {
+
+  const data = {
+    action: 'save',
+    dusun: document.getElementById('dusun').value,
+    bulan: document.getElementById('bulan').value,
+    posyandu: document.getElementById('posyandu').value,
+    penduduk: document.getElementById('penduduk').value,
+    balita: document.getElementById('balita').value,
+    remaja: document.getElementById('remaja').value,
+    dewasa: document.getElementById('dewasa').value,
+    lansia: document.getElementById('lansia').value,
+    pelapor: document.getElementById('pelapor').value,
+    kesehatan: document.getElementById('kesehatan').value,
+    sosial: document.getElementById('sosial').value,
+    pendidikan: document.getElementById('pendidikan').value,
+    pekerjaan: document.getElementById('pekerjaan').value,
+    perumahan: document.getElementById('perumahan').value,
+    trantib: document.getElementById('trantib').value
+  };
+
+  fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(result => {
+    if (result.status === 'success') {
+      alert('Data berhasil disimpan');
+      location.reload();
+    } else {
+      alert('Gagal menyimpan');
+    }
+  });
+}
+  // ===============================
+// VALIDASI FORM
+// ===============================
+
+function validasiForm(data) {
+
+  if (!data.posyandu) {
+    alert('Nama Posyandu wajib diisi');
+    return false;
+  }
+
+  if (!data.penduduk) {
+    alert('Jumlah penduduk wajib diisi');
+    return false;
+  }
+
+  if (!data.pelapor) {
+    alert('Nama pelapor wajib diisi');
+    return false;
+  }
+
+  return true;
+}
+
+// ===============================
+// RESET FORM
+// ===============================
+
+function resetForm() {
+
+  document.getElementById('posyandu').value = '';
+  document.getElementById('penduduk').value = '';
+  document.getElementById('balita').value = '';
+  document.getElementById('remaja').value = '';
+  document.getElementById('dewasa').value = '';
+  document.getElementById('lansia').value = '';
+  document.getElementById('pelapor').value = '';
+
+  document.getElementById('kesehatan').value = '';
+  document.getElementById('sosial').value = '';
+  document.getElementById('pendidikan').value = '';
+  document.getElementById('pekerjaan').value = '';
+  document.getElementById('perumahan').value = '';
+  document.getElementById('trantib').value = '';
+
+  document.getElementById('totalHadir').innerText = '0';
+  document.getElementById('persentase').innerText = '0%';
+}
+
+// ===============================
+// LOADING BUTTON
+// ===============================
+
+const tombolSimpan = document.querySelector('button[onclick="simpan()"]');
+
+function setLoading(isLoading) {
+
+  if (isLoading) {
+
+    tombolSimpan.disabled = true;
+    tombolSimpan.innerText = 'MENYIMPAN...';
+
+    tombolSimpan.style.opacity = '0.7';
+
+  } else {
+
+    tombolSimpan.disabled = false;
+    tombolSimpan.innerText = 'SIMPAN LAPORAN';
+
+    tombolSimpan.style.opacity = '1';
+  }
+}
+
+// ===============================
+// OVERRIDE FUNGSI SIMPAN
+// ===============================
+
+const simpanLama = simpan;
+
+simpan = function () {
+
+  const data = {
+    action: 'save',
+    dusun: document.getElementById('dusun').value,
+    bulan: document.getElementById('bulan').value,
+    posyandu: document.getElementById('posyandu').value,
+    penduduk: document.getElementById('penduduk').value,
+    balita: document.getElementById('balita').value,
+    remaja: document.getElementById('remaja').value,
+    dewasa: document.getElementById('dewasa').value,
+    lansia: document.getElementById('lansia').value,
+    pelapor: document.getElementById('pelapor').value,
+    kesehatan: document.getElementById('kesehatan').value,
+    sosial: document.getElementById('sosial').value,
+    pendidikan: document.getElementById('pendidikan').value,
+    pekerjaan: document.getElementById('pekerjaan').value,
+    perumahan: document.getElementById('perumahan').value,
+    trantib: document.getElementById('trantib').value
+  };
+
+  // validasi
+  if (!validasiForm(data)) return;
+
+  setLoading(true);
+  showLoading();
+  
+  fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
+
+  .then(res => res.json())
+
+  .then(result => {
+
+    setLoading(false);
+    hideLoading();
+    console.log(result);
+
+    if (result.status === 'success') {
+
+      alert('Laporan berhasil disimpan');
+
+      resetForm();
+
+    } else {
+
+      alert(
+        'Gagal menyimpan : ' +
+        (result.message || 'Unknown Error')
+      );
+    }
+  })
+
+  .catch(err => {
+
+    setLoading(false);
+
+    console.error(err);
+
+    alert('Terjadi kesalahan koneksi');
+  });
+}
+  // ======================================
+// DATA OTOMATIS DUSUN
+// ======================================
+
+const dataDusun = {
+
+  "Kuto": {
+    posyandu: "NGUDI SEHAT",
+    penduduk: 1132
+  },
+
+  "Plosorejo": {
+    posyandu: "MUGI RAHAYU",
+    penduduk: 1102
+  },
+
+  "Randubener": {
+    posyandu: "NGUDI LUHUR",
+    penduduk: 1220
+  },
+
+  "Grobogan": {
+    posyandu: "NGUDI MULYO",
+    penduduk: 863
+  },
+
+  "Pengin": {
+    posyandu: "LANGSUNG SEHAT",
+    penduduk: 810
+  },
+
+  "Bandungan": {
+    posyandu: "NGUDI WARAS",
+    penduduk: 743
+  },
+
+  "Kasihan": {
+    posyandu: "BRASTOMOLO",
+    penduduk: 492
+  }
+};
+
+// ======================================
+// AUTO ISI POSYANDU & PENDUDUK
+// ======================================
+
+function updateDusunData() {
+
+  const dusun =
+    document.getElementById('dusun').value;
+
+  const data = dataDusun[dusun];
+
+  if (data) {
+
+    const posyanduInput =
+      document.getElementById('posyandu');
+
+    const pendudukInput =
+      document.getElementById('penduduk');
+
+    posyanduInput.value = data.posyandu;
+    pendudukInput.value = data.penduduk;
+
+    // readonly
+    posyanduInput.readOnly = true;
+    pendudukInput.readOnly = true;
+
+    // style readonly
+    posyanduInput.style.background = '#e5e7eb';
+    pendudukInput.style.background = '#e5e7eb';
+
+    // update dashboard otomatis
+    hitungDashboard();
+  }
+}
+
+// ======================================
+// AUTO BULAN SESUAI BULAN SEKARANG
+// ======================================
+
+function autoBulanSekarang() {
+
+  const bulanSelect =
+    document.getElementById('bulan');
+
+  const bulanIndonesia = [
+    'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'
+  ];
+
+  const bulanSekarang =
+    bulanIndonesia[new Date().getMonth()];
+
+  bulanSelect.value = bulanSekarang;
+}
+
+// ======================================
+// EVENT PERUBAHAN DUSUN
+// ======================================
+
+document
+  .getElementById('dusun')
+  .addEventListener(
+    'change',
+    updateDusunData
+  );
+
+// ======================================
+// JALANKAN OTOMATIS SAAT HALAMAN DIBUKA
+// ======================================
+
+window.addEventListener('load', () => {
+
+  autoBulanSekarang();
+
+  updateDusunData();
+});
+  
+  // ======================================
+// LOGOUT
+// ======================================
+
+function logout() {
+
+  const konfirmasi = confirm(
+    'Yakin ingin logout?'
+  );
+
+  if (!konfirmasi) return;
+
+  showLoading();
+
+  setTimeout(() => {
+
+    // sembunyikan app
+    document
+      .getElementById('appPage')
+      .classList.add('hidden');
+
+    // tampilkan login
+    document
+      .getElementById('loginPage')
+      .classList.remove('hidden');
+
+    // hapus input login
+    document
+      .getElementById('username')
+      .value = '';
+
+    document
+      .getElementById('password')
+      .value = '';
+
+    resetForm();
+
+    hideLoading();
+
+    alert('Berhasil logout');
+
+  }, 1200);
+}
+  // ======================================
+// LOADING OVERLAY
+// ======================================
+
+function showLoading() {
+
+  document
+    .getElementById('loadingOverlay')
+    .classList.remove('hidden');
+}
+
+function hideLoading() {
+
+  document
+    .getElementById('loadingOverlay')
+    .classList.add('hidden');
+}
+</script>
+<!-- LOADING OVERLAY -->
+<div id="loadingOverlay" class="loading-overlay hidden">
+
+  <div class="loading-circle">
+
+    <div class="spinner"></div>
+
+    <div class="loading-text">
+      SABAR YA BU...
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>
