@@ -7,13 +7,31 @@
 
 <style>
 body {
+
   font-family: Arial;
-  background: #f2f4f7;
+
   margin: 0;
   padding: 20px;
+
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      135deg,
+      #dbeafe,
+      #dcfce7,
+      #f0fdf4
+    );
+
+  overflow-x: hidden;
+
+  position: relative;
 }
 
 .container {
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.3);
+  animation: fadeIn 1s ease;
   max-width: 500px;
   margin: auto;
   background: white;
@@ -193,14 +211,140 @@ button:hover {
 .loading-overlay.hidden {
   display: none !important;
 }
+/* ======================================
+   ANIMASI MODERN
+====================================== */
+
+@keyframes fadeIn {
+
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floating {
+
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.logo-posyandu {
+
+  width: 110px;
+
+  display: block;
+
+  margin: 0 auto 15px auto;
+
+  animation: floating 3s ease-in-out infinite;
+}
+
+.login-title {
+
+  text-align: center;
+
+  font-size: 34px;
+
+  font-weight: bold;
+
+  color: #166534;
+
+  margin-bottom: 5px;
+}
+
+.login-subtitle {
+
+  text-align: center;
+
+  color: #4b5563;
+
+  margin-bottom: 25px;
+}
+
+.bg-bubble {
+
+  position: fixed;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.4);
+
+  animation: bubbleMove 15s linear infinite;
+
+  z-index: -1;
+}
+
+.bg1 {
+  width: 120px;
+  height: 120px;
+  top: 10%;
+  left: 5%;
+}
+
+.bg2 {
+  width: 80px;
+  height: 80px;
+  bottom: 15%;
+  right: 10%;
+}
+
+.bg3 {
+  width: 60px;
+  height: 60px;
+  top: 50%;
+  right: 20%;
+}
+
+@keyframes bubbleMove {
+
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
 </style>
 </head>
 <body>
-
+<div class="bg-bubble bg1"></div>
+<div class="bg-bubble bg2"></div>
+<div class="bg-bubble bg3"></div>
 <div class="container">
 
 <div id="loginPage">
-<h2>LOGIN DULU SIST</h2>
+  <img
+class="logo-posyandu"
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Logo_Posyandu.png/600px-Logo_Posyandu.png"
+>
+
+<div class="login-title">
+POSYANDU 6 SPM
+</div>
+
+<div class="login-subtitle">
+Desa Kuto Kec. Kerjo Kab. Karanganyar 
+</div>
 
 <input type="text" id="username" placeholder="Username">
 <input type="password" id="password" placeholder="Password">
