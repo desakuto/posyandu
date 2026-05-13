@@ -153,6 +153,7 @@ button:hover {
 <input type="number" id="trantib" placeholder="Bidang Trantibumlinmas">
 
 <button onclick="simpan()">SIMPAN LAPORAN</button>
+<button onclick="logout()" style="margin-top:10px;background:#dc2626;">LOGOUT</button>
 </div>
 </div>
 
@@ -513,6 +514,43 @@ window.addEventListener('load', () => {
 
   updateDusunData();
 });
+  
+  // ======================================
+// LOGOUT
+// ======================================
+
+function logout() {
+
+  const konfirmasi = confirm(
+    'Yakin ingin logout?'
+  );
+
+  if (!konfirmasi) return;
+
+  // sembunyikan app
+  document
+    .getElementById('appPage')
+    .classList.add('hidden');
+
+  // tampilkan login
+  document
+    .getElementById('loginPage')
+    .classList.remove('hidden');
+
+  // hapus input login
+  document
+    .getElementById('username')
+    .value = '';
+
+  document
+    .getElementById('password')
+    .value = '';
+
+  // reset form
+  resetForm();
+
+  alert('Berhasil logout');
+}
 </script>
 
 </body>
