@@ -573,7 +573,7 @@ function login() {
       hideLoading();
 
       if (data.status === 'success') {
-
+        localStorage.setItem('sudahLogin', 'ya');
         document
           .getElementById('loginPage')
           .classList.add('hidden');
@@ -928,7 +928,17 @@ document
 // ======================================
 
 window.addEventListener('load', () => {
+if (
+  localStorage.getItem('sudahLogin')
+  === 'ya'
+) {
 
+  document.getElementById('loginPage')
+    .classList.add('hidden');
+
+  document.getElementById('appPage')
+    .classList.remove('hidden');
+}
   autoBulanSekarang();
 
   updateDusunData();
@@ -945,6 +955,7 @@ function logout() {
   );
 
   if (!konfirmasi) return;
+  localStorage.removeItem('sudahLogin');
 
   showLoading();
 
