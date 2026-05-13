@@ -281,6 +281,7 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwZ8cSQbaHCz28MwzU6SQCT
 function login() {
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
+  showLoading();
 
   fetch(API_URL, {
     method: 'POST',
@@ -291,14 +292,20 @@ function login() {
     })
   })
   .then(res => res.json())
-  .then(data => {
+  .then(data => {hideLoading();
     if (data.status === 'success') {
       document.getElementById('loginPage').classList.add('hidden');
       document.getElementById('appPage').classList.remove('hidden');
     } else {
       alert('Login gagal');
     }
-  });
+  })
+  .catch(err => {
+
+  hideLoading();
+
+  alert('Koneksi gagal');
+});
 }
 
 function hitungDashboard() {
