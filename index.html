@@ -279,32 +279,64 @@ button:hover {
 const API_URL = 'https://script.google.com/macros/s/AKfycbwZ8cSQbaHCz28MwzU6SQCTcD7CAo3aDtPpSeZybBJhormM25lQGwtXrK3eY10XvIIg/exec';
 
 function login() {
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+
+  const username =
+    document.getElementById('username').value;
+
+  const password =
+    document.getElementById('password').value;
+
   showLoading();
 
   fetch(API_URL, {
+
     method: 'POST',
+
     body: JSON.stringify({
       action: 'login',
       username,
       password
     })
+
   })
+
   .then(res => res.json())
-  .then(data => {hideLoading();
-    if (data.status === 'success') {
-      document.getElementById('loginPage').classList.add('hidden');
-      document.getElementById('appPage').classList.remove('hidden');
-    } else {
-      alert('Login gagal');
-    }
+
+  .then(data => {
+
+    // beri delay agar loading terlihat
+    setTimeout(() => {
+
+      hideLoading();
+
+      if (data.status === 'success') {
+
+        document
+          .getElementById('loginPage')
+          .classList.add('hidden');
+
+        document
+          .getElementById('appPage')
+          .classList.remove('hidden');
+
+      } else {
+
+        alert('Login gagal');
+      }
+
+    }, 1200);
+
   })
-  .catch(err => {
 
-  hideLoading();
+ .catch(err => {
 
-  alert('Koneksi gagal');
+    setLoading(false);
+
+    hideLoading();
+
+    console.error(err);
+
+    alert('Terjadi kesalahan koneksi');
 });
 }
 
@@ -651,29 +683,36 @@ function logout() {
 
   if (!konfirmasi) return;
 
-  // sembunyikan app
-  document
-    .getElementById('appPage')
-    .classList.add('hidden');
+  showLoading();
 
-  // tampilkan login
-  document
-    .getElementById('loginPage')
-    .classList.remove('hidden');
+  setTimeout(() => {
 
-  // hapus input login
-  document
-    .getElementById('username')
-    .value = '';
+    // sembunyikan app
+    document
+      .getElementById('appPage')
+      .classList.add('hidden');
 
-  document
-    .getElementById('password')
-    .value = '';
+    // tampilkan login
+    document
+      .getElementById('loginPage')
+      .classList.remove('hidden');
 
-  // reset form
-  resetForm();
+    // hapus input login
+    document
+      .getElementById('username')
+      .value = '';
 
-  alert('Berhasil logout');
+    document
+      .getElementById('password')
+      .value = '';
+
+    resetForm();
+
+    hideLoading();
+
+    alert('Berhasil logout');
+
+  }, 1200);
 }
   // ======================================
 // LOADING OVERLAY
